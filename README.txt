@@ -1,5 +1,5 @@
 This code will create an Arnold/Vray/Lambert material (Based on user selection) and assign textures from the selected folder to that material, then apply it to a selected model
-
+NOTE: The Vray option will not work if the Vray plugin is not installed
 
 How to use:
 1.Select the object you want to apply the material to
