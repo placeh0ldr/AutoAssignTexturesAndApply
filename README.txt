@@ -1,6 +1,11 @@
 This code will create an Arnold/Vray/Lambert material (Based on user selection) and assign textures from the selected folder to that material, then apply it to a selected model
 NOTE: The Vray option will not work if the Vray plugin is not installed
 
+Installation:
+This can be loaded into Maya's script editor and run from there 
+OR
+Create a new item on a maya shelf -> Set the command language to Python -> Copy and paste the code into the text box -> Run the code by clicking the icon in the shelf
+
 How to use:
 1.Select the object you want to apply the material to
 2.Select the material type
