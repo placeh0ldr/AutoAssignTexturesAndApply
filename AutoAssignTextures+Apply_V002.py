@@ -235,17 +235,22 @@ def HowToUseWindow(self):
     if (cmds.window("HowToUse", exists=True)):
         cmds.deleteUI("HowToUse")
     #Sets up text explaining how to use the program
-    HowWindow = cmds.window("HowToUse", title="How To Use", widthHeight = (250,100))
+    HowWindow = cmds.window("HowToUse", title="How To Use", widthHeight = (300,150))
     
     cmds.columnLayout(adjustableColumn=True)
-    cmds.text(label='1.Select the material type', align='left')
+    cmds.text(label='1.Select the object you want to apply the material to', align='left')
     cmds.separator(height=20)
-    cmds.text(label='2.Type in your material name', align='left')
+    cmds.text(label='2.Select the material type', align='left')
     cmds.separator(height=20)
-    cmds.text(label='3.Select the types of textures you want to use', align='left')
+    cmds.text(label='3.Type in your material name', align='left')
     cmds.separator(height=20)
-    cmds.text(label='4.Select the folder location of the textures', align='left')
+    cmds.text(label='4.Select the types of textures you want to use', align='left')
     cmds.separator(height=20)
+    cmds.text(label='5.Select the folder location of the textures', align='left')
+    cmds.separator(height=20)
+    cmds.text(label='6.The material made using the textures will be applied to the selected model', align='left')
+    cmds.separator(height=20)
+   
     cmds.text(label='IMPORTANT: Make sure you files are named correctly', align='left')
     cmds.text(label='(See About > Name Guide for details)', align='left')
     
