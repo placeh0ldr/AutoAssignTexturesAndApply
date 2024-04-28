@@ -26,7 +26,7 @@ def attemptCreateMaterial():
 
 def createMaterial():
     global dirPath,material, shader, searchName, filePath, fileNames, textureTypes, diffuseDone, roughnessDone, metalDone, normalDone, subsurfaceDone, displacementDone
-    
+    cmds.hyperShade(clearWorkArea=True)
     meshName = cmds.ls(selection=True)
     #opens a window to find the file where the textures are located
     dirPath = cmds.fileDialog2(fileMode=3, caption="Select the textures folder")[0] + "\\"
@@ -73,6 +73,7 @@ def createMaterial():
                 
 def SetTextureFile(diffuseDone, roughnessDone, metalDone, normalDone, subsurfaceDone, displacementDone):
     #Looks through all files in the selected folder
+    
     for f in range(len(fileNames)):
         for t in range(len(textureTypes)):
             if textureTypes[t] in fileNames[f]:
@@ -105,8 +106,8 @@ def SetTextureFile(diffuseDone, roughnessDone, metalDone, normalDone, subsurface
                         print(textureFile + ' loaded into diffuse')
                         diffuseDone = 1
                         
-                #If the file name ends in _Roughness    
-                if textureType == "_Roughness" and cmds.checkBox('Roughness', query = True, value=True):
+                #If the file name ends in _Roughness  
+                elif textureType == "_Roughness" and cmds.checkBox('Roughness', query = True, value=True):
                     if roughnessDone == 0:
                         textureNode = cmds.shadingNode('file', name = 'RoughnessTexture', asTexture=True)
                         #Changes the connection name based on what mat type is selected
@@ -128,9 +129,10 @@ def SetTextureFile(diffuseDone, roughnessDone, metalDone, normalDone, subsurface
                         cmds.setAttr(textureNode + '.fileTextureName', textureFile, type="string")
                         print(textureFile + ' loaded into roughness')
                         roughnessDone = 1
-                
+
                 #If the file name ends in _Metal  
-                if textureType == "_Metal" and cmds.checkBox('Metal', query = True, value=True):
+                elif textureType == "_Metalness" and cmds.checkBox('Metal', query = True, value=True):
+
                     if metalDone == 0:
                         textureFile = dirPath + filePath
                         #Creates a texturenode and connects it to the material
@@ -147,7 +149,7 @@ def SetTextureFile(diffuseDone, roughnessDone, metalDone, normalDone, subsurface
                         print(textureFile + ' loaded into metal')
                         metalDone = 1
                     
-                if textureType == "_Subsurface" and cmds.checkBox('Subsurface', query = True, value=True):
+                elif textureType == "_Subsurface" and cmds.checkBox('Subsurface', query = True, value=True):
                     if subsurfaceDone == 0:
                         textureFile = dirPath + filePath
                         #Creates a texturenode and connects it to the material
@@ -160,7 +162,7 @@ def SetTextureFile(diffuseDone, roughnessDone, metalDone, normalDone, subsurface
                         print(textureFile + ' loaded into subsurface')
                         subsurfaceDone = 1
                 
-                if textureType == "_Displacement" and cmds.checkBox('Displacement', query = True, value=True):
+                elif textureType == "_Displacement" and cmds.checkBox('Displacement', query = True, value=True):
                     if displacementDone == 0:
                         #Creates a texturenode and connects it to the material
                         textureNode = cmds.shadingNode('file', name = 'DisplacementTexture', asTexture=True)
@@ -175,7 +177,7 @@ def SetTextureFile(diffuseDone, roughnessDone, metalDone, normalDone, subsurface
                         print(textureFile + ' loaded into displacement')
                         displacementDone = 1
                     
-                if textureType == "_Normal" and cmds.checkBox('Normal', query = True, value=True):
+                elif textureType == "_Normal" and cmds.checkBox('Normal', query = True, value=True):
                     if normalDone == 0:
                         #Changes the connection name based on what mat type is selected
                         #Creates a texturenode and connects it to the material
@@ -184,11 +186,11 @@ def SetTextureFile(diffuseDone, roughnessDone, metalDone, normalDone, subsurface
                             normalNode = cmds.shadingNode('aiNormalMap', name = 'aiNormalMap', asTexture=True)
                             cmds.connectAttr(textureNode + '.outColor', normalNode + '.input')
                             cmds.connectAttr(normalNode + '.outValue', material + '.normalCamera')
-                            roughnessDone = 1 
+                            normalDone = 1 
                         
                         elif cmds.radioButton(VrayChecked, query = True,select =True):
                             cmds.connectAttr(textureNode + '.outColor', normalNode + '.bumpMap')
-                            roughnessDone = 1 
+                            normalDone = 1 
                         #Sets the values associated with colorSpace etc
                         cmds.setAttr(textureNode + ".colorSpace", "Raw", type='string')
                         cmds.setAttr(textureNode+'.alphaIsLuminance',0)
